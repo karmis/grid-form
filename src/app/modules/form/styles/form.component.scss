@@ -1,0 +1,42 @@
+form {
+  padding: 18px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  &.shadow {
+    box-shadow: 3px 4px 5px -3px rgba(0, 0, 0, 0.75);
+  }
+
+  &.size-sm {
+    width: 280px;
+  }
+
+  &.size-md {
+    width: 550px;
+    min-height: 200px;
+    height: auto;
+  }
+
+  .form-control {
+    margin-bottom: 20px;
+  }
+
+
+
+  .custom-check {
+    position: relative;
+    height: 25px;
+    .checkbox-label {
+      color: #495057;
+      font-size: 15px;
+      position: absolute;
+    }
+  }
+
+  input[type="text"] {
+    height: 40px;
+  }
+  input:focus::placeholder {
+    color: transparent;
+  }
+}

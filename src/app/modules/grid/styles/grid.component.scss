@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: none;
+
+  thead th {
+    font-size: 14px;
+    font-weight: 400;
+    color: #A9B2C9;
+    padding-left: 0.75rem;
+    background-color: #0A508C;
+    border: none;
+
+    &:first-child {
+      border-radius: 5px 0 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 5px 0 0;
+    }
+  }
+
+  tbody {
+    background-color: #fff;
+    tr:last-child td:last-child {
+      border-radius: 0 0 5px 0;
+    }
+    tr:last-child td:first-child {
+      border-radius: 0 0 0 5px;
+    }
+    tr {
+      td {
+        &.formatter-cell {
+          text-align: center;
+          border-left: none;
+        }
+      }
+    }
+  }
+
+}

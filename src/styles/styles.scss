@@ -1,0 +1,90 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap-variables";
+@import "bootstrap-custom";
+@import "controls/checkbox";
+
+
+// new classes for button
+$digital-primary: #1493ff;
+
+$btn-background: #1493ff;
+$btn-border: #1493ff;
+$btn-color: #fff;
+
+@mixin button-variant($background, $border, $color) {
+  background-color: $btn-background;
+  border: 2px solid $btn-border;
+  color: #fff;
+
+  &:hover {
+    border: 2px solid $btn-background;
+    color: $btn-color;
+  }
+}
+
+.btn-primary {
+  &.digital {
+    @include button-variant($btn-background, $btn-border, $btn-color);
+    font-weight: bold;
+    font-size: 13px;
+    padding: 10px;
+    width: 100%;
+  }
+  &.font-weight-normal {
+    font-weight: normal;
+  }
+}
+
+/*
+.btn-digital-primary {
+  @include button-variant($digital-primary, darken($digital-primary, 7.5%), darken($digital-primary, 10%), lighten($digital-primary,5%), lighten($digital-primary, 10%), darken($digital-primary,30%));
+}
+
+.btn-outline-digital-primary {
+  @include button-outline-variant($digital-primary, #222222, lighten($digital-primary,5%), $digital-primary);
+}*/
+
+// new classes for checkbox
+.digital-control-input:focus ~ .digital-control-indicator {
+  -webkit-box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0275d8;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px #0275d8;
+}
+
+
+// utilities
+.pull-right {
+  float: right;
+}
+
+.pull-left {
+  float: left;
+}
+
+.mb-5 {
+  margin-bottom: 5px !important;
+}
+
+.p-5 {
+  padding: 5px !important;
+}
+
+.text-decoration-underline {
+  //border-bottom: 1px solid;
+  //padding-bottom: 1px;
+  border-radius: 0;
+  text-decoration: underline;
+  width: auto;
+  padding-left: 1px;
+  padding-right: 1px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+;
+}
+
+.btn-link {
+  &.danger {
+    color: #f00;
+  }
+}

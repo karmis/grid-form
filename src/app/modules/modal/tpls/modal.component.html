@@ -1,0 +1,43 @@
+<div [hidden]="!isOpen" class="modal">
+    <div [ngClass]="{
+    'modal-size-sm': config.size === 'sm',
+    'modal-size-md': config.size === 'md',
+    'modal-size-lg': config.size === 'lg'
+    }" class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">
+                <span class="title">{{config.title}}</span>
+                <span (click)="close()" class="close pull-right">&times;</span>
+            </div>
+        </div>
+
+
+        <!--Body container-->
+        <div #body class="modal-body"></div>
+
+        <!--Footer container-->
+        <div class="modal-footer-container">
+            <div *ngIf="config.footer" class="modal-footer">
+                <div *ngIf="config.footer == 'no|yes'" class="buttons">
+                    <button (click)="service.emitEvent( 'no')" class="btn btn-danger cancel"
+                            type="button">
+                        Cancel
+                    </button>
+                    <button (click)="service.emitEvent('yes' )"
+                            class="btn btn-primary digital" type="button">
+                        Ok
+                    </button>
+                </div>
+            </div>
+            <ng-container *ngIf="footerRef">
+                <ng-container
+                    #footerContainer
+                    *ngTemplateOutlet="footerRef;"
+                >
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+

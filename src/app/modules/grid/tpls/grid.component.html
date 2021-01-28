@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7 p-5">
+            <app-form #form
+                      (onChange)="syncForms($event)"
+                      (onSubmit)="addRow($event, 0)"
+                      [columns]="filterColumns(['agreed'])"
+                      [config]="{
+                        type: 'row',
+                        isNew: true,
+                        size: 'sm'
+                      }"
+                      [row]="selected?.row||{}"></app-form>
+        </div>
+
+        <div class="col-sm-5 p-5">
+            <app-form #form
+                      (onChange)="syncForms($event)"
+                      (onSubmit)="addRow($event, 0)"
+                      [columns]="filterColumns(['agreed'])"
+                      [config]="{
+                        type: 'group',
+                        isNew: true,
+                         size: 'md'
+                      }"
+                      [row]="selected?.row||{}"></app-form>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <button (click)="addTable()" class="btn btn-primary digital font-weight-normal p-1 mb-1">
+            Copy table
+        </button>
+    </div>
+    <div *ngFor="let i of count;let tableId = index" [@gridAnim]="animationGridState">
+        <button (click)="removeTable(tableId)" *ngIf="tableId !== 0"
+                class="pull-right btn btn-danger digital font-weight-bold pb-0 pt-0 pl-2 pr-2 mb-1">
+            X
+        </button>
+        <table #table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <ng-container *ngFor="let column of sortColumnsByIndex(columns)">
+                    <th *ngIf="!column.table||!column.table.hidden" [width]="column.width">
+                        {{column.title}}
+                    </th>
+                </ng-container>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr *ngFor="let row of getData(tableId);let rowId = index" class="grid-row" [id]="'grid-'+tableId+'-row-' + rowId"
+                [ngClass]="{'active': selected?.row[config.indexField] == row[config.indexField]}">
+                <ng-container *ngFor="let column of columns;let columnId = index">
+                    <td (click)="selectRow({
+                    column: column,
+                    columns: columns,
+                    row: row,
+                    cell: row[column.field],
+                    component: context,
+                    tableId: tableId
+                })"
+                        *ngIf="!column.table||!column.table.hidden" [id]="'grid-cell-' + columnId + rowId" [ngClass]="{
+                            'formatter-cell': column.type !== 'plain',
+                            'plain-cell': column.type === 'plain'
+                    }">
+                        <!--For regular values-->
+                        <ng-container *ngIf="column.type === 'plain'">
+                            {{row[column.field]}}
+                        </ng-container>
+
+                        <!--For formatters-->
+                        <ng-container *ngIf="column.type !== 'plain'">
+                            <div [id]="'t-' + tableId + '-c-' + columnId + '-r-' + rowId"
+                                 class="formatter">
+                            </div>
+                        </ng-container>
+                    </td>
+                </ng-container>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

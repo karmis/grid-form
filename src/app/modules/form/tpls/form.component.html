@@ -1,0 +1,59 @@
+<form #form="ngForm" (ngSubmit)="_onSubmit()" [ngClass]="{
+                    'shadow': config.type !== 'modal',
+                    'size-sm': config.size === 'sm',
+                    'size-md': config.size === 'md',
+                    'size-lg': config.size === 'lg',
+                    'form-type-group': config.type === 'group',
+                    'form-type-row': config.type === 'row',
+                    'form-type-modal': config.type === 'modal'
+                }" class="needs-validation" novalidate>
+    <div class="form-row">
+        <ng-container *ngFor="let col of columns;">
+            <div [ngClass]="{
+                    'col-md-6': config.type === 'group' || config.type === 'modal',
+                    'col-md-12': config.type === 'row'
+                }" class="modal-content">
+                <ng-container *ngIf="col.type === 'plain' && col?.form?.type === 'text'">
+                    <label *ngIf="col?.form?.label" [for]="col?.form?.id||col.field">
+                        {{col?.form?.label || col.title}}
+                    </label>
+                    <input (keyup)="_onChange()"
+                           (keydown)="_onChange()"
+                           [(ngModel)]="model[col.field]"
+                           [id]="col?.form?.id||col.field"
+                           [name]="col?.form?.name||col.field"
+                           [ngModelOptions]="{ updateOn: 'blur'}"
+                           [placeholder]="col?.form?.placeholder||col.title"
+                           [required]="col?.form?.required||false"
+                           [type]="col?.form?.type||'text'"
+                           class="form-control">
+                    <small *ngIf="col?.form?.helpId" [id]="col?.form?.helpId" class="form-text text-muted">
+                        {{col?.form?.helpText || ''}}
+                    </small>
+                </ng-container>
+
+                <ng-container *ngIf="col.type === 'plain' && col?.form?.type === 'checkbox'">
+                    <label [for]="col?.form?.id||col.field" class="custom-check">
+                        <span *ngIf="col?.form?.label" class="checkbox-label">{{col?.form?.label || ''}}</span>
+                        <!--(change)="_onChange()"-->
+                        <input
+                                [checked]="model[col.field]"
+                                [name]="col?.form?.name||col.field"
+                                [required]="col?.form?.required||false"
+                                [(ngModel)]="model[col.field]"
+                                [type]="col?.form?.type">
+                        <span (click)="model[col.field] = !model[col.field];" class="checkmark"></span>
+                    </label>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+
+    <button *ngIf="config.isNew" [disabled]="!form.valid" class="btn btn-primary digital mb-5" type="submit">
+        ADD
+    </button>
+
+    <button *ngIf="!config.isNew" [disabled]="!form.valid" class="btn btn-primary digital mb-5" type="submit">
+        SAVE
+    </button>
+</form>
